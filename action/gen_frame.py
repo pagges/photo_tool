@@ -38,7 +38,7 @@ class GenFrameAction(IAction):
         text_width, text_height = text_font.getsize(text_content)
         # 计算文字的的坐标
         text_x_axis = frame_width - text_width - self.context.padding_width
-        text_y_axis = final_height - self.context.padding_width - int(text_height / 2)
+        text_y_axis = final_height - self.context.padding_width - int(text_height / 4)
 
         # 绘制文字
         draw = ImageDraw.Draw(img_new)
