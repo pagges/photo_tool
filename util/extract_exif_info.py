@@ -49,7 +49,9 @@ def _get_float_form_exif_value(str_value):
         return None
     elif str_value == '0':
         return 0
-    elif str_value.index('/') > 0:
+    elif str_value.find('/') == -1:
+        return float(str_value)
+    elif str_value.find('/') > 0:
         index = str_value.index('/')
         left_v = float(str_value[index - 1:index])
         right_v = float(str_value[index + 1:index + 2])
