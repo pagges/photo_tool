@@ -26,11 +26,13 @@ def get_exif_info(image_file):
         # 快门
         exposureTime = str(tagsDict[exposureTimeKey]).strip() if (exposureTimeKey in tagsDict) else None
         # 光圈
-        fNumber = str(tagsDict[fNumberKey]).strip() if (fNumberKey in tagsDict) else None
+        fNumberTag = str(tagsDict[fNumberKey]).strip() if (fNumberKey in tagsDict) else None
+        fNumber = _get_float_form_exif_value(fNumberTag)
         # iso
         iso = str(tagsDict[isoKey]).strip() if (fNumberKey in tagsDict) else None
         # 焦距
-        focalLength = str(tagsDict[focalLength]).strip() if (focalLength in tagsDict) else None
+        focalLengthTag = str(tagsDict[focalLength]).strip() if (focalLength in tagsDict) else None
+        focalLength = _get_float_form_exif_value(focalLengthTag)
         # 拍摄方向
         orientationTag = str(tagsDict[orientationTag]).strip() if (orientationTag in tagsDict) else ""
         numItem = [int(s) for s in re.findall(r'-?\d+\.?\d*', str(orientationTag))]
@@ -42,12 +44,27 @@ def get_exif_info(image_file):
         logger.error("get_exif_info error {}", e)
 
 
+def _get_float_form_exif_value(str_value):
+    if str_value == None:
+        return None
+    elif str_value == '0':
+        return 0
+    elif str_value.index('/') > 0:
+        index = str_value.index('/')
+        left_v = float(str_value[index - 1:index])
+        right_v = float(str_value[index + 1:index + 2])
+        return float(left_v / right_v)
+
+
 if __name__ == '__main__':
-    f = open("./input/3.JPG", 'rb')
+    f = open("/Users/admin/Downloads/test_image/DSCF1081.JPG", 'rb')
     orientationTag = 'Image Orientation'
     tagsDict = exifread.process_file(f)
+    fNumberKey = 'EXIF FNumber'
+    fNumber = str(tagsDict[fNumberKey]).strip() if (fNumberKey in tagsDict) else None
     orientationTag = str(tagsDict[orientationTag]).strip() if (orientationTag in tagsDict) else "0"
     print(orientationTag)
     numItem = [int(s) for s in re.findall(r'-?\d+\.?\d*', str(orientationTag))]
     orientation = numItem[0] if (len(numItem) > 0) else 0
     print(orientation)
+    print(fNumber)

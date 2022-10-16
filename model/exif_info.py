@@ -6,7 +6,7 @@ class ExifInfo(object):
     # 拍摄时间
     shotTime = ""
     # 焦距
-    focalLength = ""
+    focalLength = 0
     # iso
     iSOSpeedRatings = ""
     # 快门
@@ -16,7 +16,7 @@ class ExifInfo(object):
     # 镜头型号
     lensModel = ""
     # 光圈
-    fNumber = ""
+    fNumber = 0
     # 照片方向
     orientation = 0
 
@@ -35,9 +35,9 @@ class ExifInfo(object):
         camearMakerMsg = self.cameraMaker
         camerModelMsg = self.cameraModel
         focalLengthMsg = "@{}mm".format(
-            self.focalLength) if self.focalLength != None and int(self.focalLength) >= 0 else None
+            self.focalLength) if self.focalLength != None and self.focalLength >= 0 else None
         exposureTimeMsg = "{}Sec".format(self.exposureTime) if self.exposureTime != None else None
-        fNumberMsg = "F/{}".format(self.fNumber) if self.fNumber != None and self.fNumber != '0' else None
+        fNumberMsg = "F/{}".format(self.fNumber) if self.fNumber != None and self.fNumber > 0 else None
         isoMsg = "ISO{}".format(self.iSOSpeedRatings) if self.iSOSpeedRatings != None else None
         msgList = list([camearMakerMsg, camerModelMsg, focalLengthMsg, exposureTimeMsg, fNumberMsg, isoMsg])
         return ' '.join(list(filter(None, msgList)))
