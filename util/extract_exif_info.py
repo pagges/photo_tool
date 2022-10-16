@@ -54,17 +54,3 @@ def _get_float_form_exif_value(str_value):
         left_v = float(str_value[index - 1:index])
         right_v = float(str_value[index + 1:index + 2])
         return float(left_v / right_v)
-
-
-if __name__ == '__main__':
-    f = open("/Users/admin/Downloads/test_image/DSCF1081.JPG", 'rb')
-    orientationTag = 'Image Orientation'
-    tagsDict = exifread.process_file(f)
-    fNumberKey = 'EXIF FNumber'
-    fNumber = str(tagsDict[fNumberKey]).strip() if (fNumberKey in tagsDict) else None
-    orientationTag = str(tagsDict[orientationTag]).strip() if (orientationTag in tagsDict) else "0"
-    print(orientationTag)
-    numItem = [int(s) for s in re.findall(r'-?\d+\.?\d*', str(orientationTag))]
-    orientation = numItem[0] if (len(numItem) > 0) else 0
-    print(orientation)
-    print(fNumber)
