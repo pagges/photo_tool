@@ -34,10 +34,16 @@ class ExifInfo(object):
     def getExifMessage(self):
         camearMakerMsg = self.cameraMaker
         camerModelMsg = self.cameraModel
-        focalLengthMsg = "@{}mm".format(
+        focalLengthMsg = "{} mm".format(
             self.focalLength) if self.focalLength != None and self.focalLength >= 0 else None
-        exposureTimeMsg = "{}Sec".format(self.exposureTime) if self.exposureTime != None else None
+        exposureTimeMsg = "{} s".format(self.exposureTime) if self.exposureTime != None else None
         fNumberMsg = "F/{}".format(self.fNumber) if self.fNumber != None and self.fNumber > 0 else None
-        isoMsg = "ISO{}".format(self.iSOSpeedRatings) if self.iSOSpeedRatings != None else None
-        msgList = list([camearMakerMsg, camerModelMsg, focalLengthMsg, exposureTimeMsg, fNumberMsg, isoMsg])
+        isoMsg = "ISO {}".format(self.iSOSpeedRatings) if self.iSOSpeedRatings != None else None
+        msgList = list([focalLengthMsg, exposureTimeMsg, fNumberMsg, isoMsg])
+        return ' '.join(list(filter(None, msgList)))
+
+    def getCameraInfo(self):
+        camearMakerMsg = self.cameraMaker
+        camerModelMsg = self.cameraModel
+        msgList = list([camearMakerMsg, camerModelMsg])
         return ' '.join(list(filter(None, msgList)))

@@ -29,3 +29,6 @@ class Context(FrameConfig):
 
     def get_orientation(self):
         return self.exif_info.orientation
+
+    def get_exif_camera_info(self):
+        return self.exif_info.getCameraInfo()
